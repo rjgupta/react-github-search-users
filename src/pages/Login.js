@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import styled from 'styled-components';
 import loginImg from '../images/login-img.svg';
+
 const Login = () => {
   return (
     <Wrapper>
@@ -13,6 +14,7 @@ const Login = () => {
     </Wrapper>
   )
 };
+
 const Wrapper = styled.section`
   min-height: 100vh;
   display: grid;
@@ -31,4 +33,5 @@ const Wrapper = styled.section`
     color: var(--clr-grey-9);
   }
 `;
+
 export default Login;

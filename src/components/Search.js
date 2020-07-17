@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { MdSearch } from 'react-icons/md';
 import { GithubContext } from '../context/context';
+
 const Search = () => {
   return <h2>search component</h2>;
 };
@@ -75,6 +76,7 @@ const Wrapper = styled.div`
     font-weight: 400;
   }
 `;
+
 const ErrorWrapper = styled.article`
   position: absolute;
   width: 90vw;
@@ -87,4 +89,5 @@ const ErrorWrapper = styled.article`
     letter-spacing: var(--spacing);
   }
 `;
+
 export default Search;
