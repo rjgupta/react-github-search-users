@@ -32,7 +32,7 @@ const UserInfo = () => {
       color: 'green'
     },
     {
-      id:1, 
+      id:4, 
       icon: <GoGist className='icon' />, 
       label: 'gists', 
       value: public_gists, 
@@ -48,7 +48,6 @@ const UserInfo = () => {
           <Item key={item.id} {...item}></Item>
         )
       })}
-
     </Wrapper>
   </section>
   );
