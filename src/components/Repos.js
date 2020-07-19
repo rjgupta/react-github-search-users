@@ -10,17 +10,18 @@ const Repos = () => {
   // reduce method: callback function and return object
   let languages = repos.reduce( (total, item) => {
     // console.log(item);
-    const { language } = item;
+    const { language, stargazers_count } = item;
 
     if(!language) return total;
 
     if(!total[language]) {
-      total[language] = {label: language, value: 1};
+      total[language] = { label: language, value: 1, stars: stargazers_count };
     } else {
       total[language] = {
         ...total[language], 
-        value: total[language].value + 1
-      }
+        value: total[language].value + 1,
+        stars:total[language].stars + stargazers_count
+      };
     }
     // console.log(language);
     return total;
@@ -28,10 +29,20 @@ const Repos = () => {
   // console.log(languages);
 
   // Object.values gives us back an array of the values
-  languages = Object.values(languages).sort((language, highest) => {
-    return highest.value - language.value;
+  const mostUsedlanguages = Object.values(languages).sort((a, b) => {
+    return b.value - a.value;
   }).slice(0, 6);
+
   // console.log(languages);
+
+  // mostStarsPerLanguage
+  const mostStarsPerLanguage = Object.values(languages).sort((a, b) => {
+    return b.stars - a.stars;
+  }).map((item) => {
+    return {...item, value:item.stars};
+  }).slice(0,6);
+
+  console.log(mostStarsPerLanguage);
 
   const chartData = [
     {
@@ -56,7 +67,9 @@ const Repos = () => {
     <section className='section'>
       <Wrapper className='section-center'>
         {/* <ExampleChart data={chartData} /> */}
-        <Pie3D data={languages} />
+        <Pie3D data={mostUsedlanguages} />
+        <div></div>
+        <Doughnut2D data={mostStarsPerLanguage} />
       </Wrapper>
     </section>
   )
