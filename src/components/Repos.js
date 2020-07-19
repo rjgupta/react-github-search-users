@@ -6,6 +6,33 @@ import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
 const Repos = () => {
   const {repos} = React.useContext(GithubContext);
   // console.log(repos);
+
+  // reduce method: callback function and return object
+  let languages = repos.reduce( (total, item) => {
+    // console.log(item);
+    const { language } = item;
+
+    if(!language) return total;
+
+    if(!total[language]) {
+      total[language] = {label: language, value: 1};
+    } else {
+      total[language] = {
+        ...total[language], 
+        value: total[language].value + 1
+      }
+    }
+    // console.log(language);
+    return total;
+  }, {})
+  // console.log(languages);
+
+  // Object.values gives us back an array of the values
+  languages = Object.values(languages).sort((language, highest) => {
+    return highest.value - language.value;
+  }).slice(0, 6);
+  // console.log(languages);
+
   const chartData = [
     {
       label: "JavaScript",
@@ -17,7 +44,7 @@ const Repos = () => {
     },
     {
       label: "CSS",
-      value: "30"
+      value: "20"
     },
     {
       label: "Python",
@@ -28,7 +55,8 @@ const Repos = () => {
   return (
     <section className='section'>
       <Wrapper className='section-center'>
-        <ExampleChart data={chartData} />
+        {/* <ExampleChart data={chartData} /> */}
+        <Pie3D data={languages} />
       </Wrapper>
     </section>
   )
