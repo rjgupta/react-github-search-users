@@ -33,9 +33,9 @@ const ChartComponent = ({data}) => {
       // Chart Configuration
       chart: {
         //Set the chart caption
-        caption: 'Most Popular Language',
+        caption: 'Most Popular',
         //Set the theme for your chart
-        theme: "fusion",               
+        // theme: "",               
         //Set the chart subcaption
         // subCaption: 'fusion',
         //Set the x-axis name

@@ -42,7 +42,27 @@ const Repos = () => {
     return {...item, value:item.stars};
   }).slice(0,6);
 
-  console.log(mostStarsPerLanguage);
+  // console.log(mostStarsPerLanguage);
+
+  // Stars, forks
+  let {stars, forks } = repos.reduce((total, item) => {
+    const {stargazers_count, name, forks} = item;
+    // stars
+    total.stars[stargazers_count] = {label: name, value: stargazers_count}
+    // forks
+    total.forks[forks] = {label: name, value:forks}
+    return total;
+  }, {
+    stars: {},
+    forks: {}
+  })
+
+  // generates an array of values
+  stars = Object.values(stars).slice(-5).reverse();
+  forks = Object.values(forks).slice(-5).reverse();
+
+  // console.log(stars);
+
 
   const chartData = [
     {
@@ -68,9 +88,9 @@ const Repos = () => {
       <Wrapper className='section-center'>
         {/* <ExampleChart data={chartData} /> */}
         <Pie3D data={mostUsedlanguages} />
-        <Column3D data={chartData} />
+        <Column3D data={stars} />
         <Doughnut2D data={mostStarsPerLanguage} />
-        <Bar3D data={chartData} />
+        <Bar3D data={forks} />
       </Wrapper>
     </section>
   )

@@ -33,9 +33,9 @@ const ChartComponent = ({data}) => {
       // Chart Configuration
       chart: {
         //Set the chart caption
-        caption: 'Most Forked Language',
+        caption: 'Most Forked',
         //Set the theme for your chart
-        theme: "fusion",     
+        // theme: "fusion",     
         //Set the chart subcaption
         // subCaption: 'fusion',
         //Set the x-axis name
