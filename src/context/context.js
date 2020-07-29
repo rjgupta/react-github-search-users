@@ -19,9 +19,47 @@ const GithubProvider = ({children}) => {
   // request 
   const [requests, setRequests] = useState(0);
   // loading
-  const [loading, setIsLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
   // error
   const [error, setError] = useState({show: false, msg: ""});
+
+  // searching Users
+  const searchGithubUser = async(user) => {
+    // console.log(user);
+    // just invoke the function cuz we have set default values already.
+    toggleError();
+    setIsLoading(true);
+    // catach the reponse
+    const response = await axios(`${rootUrl}/users/${user}`).catch(err => console.log(err))
+
+    console.log(response);
+    if(response) {
+      setGithubUser(response.data);
+      const {login, followers_url} = response.data;
+
+      // repos: https://api.github.com/users/rjgupta/repos?per_page=100
+      // followers: https://api.github.com/users/rjgupta/followers     
+      await Promise.allSettled([
+        axios(`${rootUrl}/users/${login}/repos?per_page=100`), 
+        axios(`${followers_url}?per_page=100`)
+      ]).then((results) => {
+        // console.log(results);
+        const [repos, followers] = results;
+        const status = 'fulfilled';
+        if(repos.status === status) {
+          setRepos(repos.value.data)
+        }
+        if(followers.status === status) {
+          setFollowers(followers.value.data)
+        }
+      }).catch(err => console.log(err));
+    } else {
+      toggleError(true, 'user not found');
+    }
+
+    checkRequests();
+    setIsLoading(false);
+  }
 
   // check rate
   const checkRequests = () => {
@@ -50,7 +88,19 @@ const GithubProvider = ({children}) => {
   useEffect(checkRequests, []);
 
   return (
-  <GithubContext.Provider value={{ githubUser, repos, followers, requests, error }} >
+  <GithubContext.Provider 
+    value={
+      { 
+        githubUser, 
+        repos, 
+        followers, 
+        requests, 
+        error,
+        searchGithubUser,
+        isloading
+      }
+    } 
+    >
     {children}
   </GithubContext.Provider>
   )
