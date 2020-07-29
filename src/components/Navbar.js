@@ -19,10 +19,7 @@ const Navbar = () => {
       {
         isUser && 
         user.name && 
-        <h4>Welcome, 
-          <strong>
-            {user.name.toUpperCase()}
-          </strong> 
+        <h4>Welcome, <strong>{user.name.toUpperCase()}</strong> 
         </h4>}
 
       {isUser ? (
