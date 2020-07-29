@@ -63,7 +63,6 @@ const Repos = () => {
 
   // console.log(stars);
 
-
   const chartData = [
     {
       label: "JavaScript",
